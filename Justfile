@@ -6,10 +6,11 @@ prefix := "claude-"
 # ── Colima / Docker setup ────────────────────────────────────────
 
 # Install Colima + Docker CLI and start the VM
+# For Apple Silicon use the following
+# colima start --cpu 4 --memory 8 --disk 60 --vm-type vz --vz-rosetta
 setup:
     brew install colima docker docker-buildx
-    colima start --cpu 4 --memory 8 --disk 60 --vm-type vz --vz-rosetta
-
+    colima start --cpu 4 --memory 8 --disk 60
 # Start Colima VM
 colima-start:
     colima start
@@ -26,11 +27,11 @@ colima-status:
 
 # Build the container image
 build:
-    docker build -t {{image}} .
+    docker buildx build -t {{image}} .
 
 # Rebuild without cache
 rebuild:
-    docker build --no-cache -t {{image}} .
+    docker buildx build --no-cache -t {{image}} .
 
 # ── Container lifecycle ───────────────────────────────────────────
 
